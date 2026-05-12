@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="recap-header text-center mt-5">
+        <h1 class="fw-bold mb-1">Paiement réussi !</h1>
+        <p class="mb-0">Merci pour votre commande. Voici le récapitulatif :</p>
+    </div>
+
+    <!-- SI LE SIGNAL PAYPAL N'EST PAS ENCORE ARRIVÉ -->
+    {% if en_attente %}
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+        <p class="loader-text">Validation du paiement en cours...</p>
+        <p class="loader-subtext">Cela peut prendre quelques secondes…</p>
+    </div>
+
+    <style>
+        .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 40px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 450px;
+        }
+
+        .loader {
+            width: 55px;
+            height: 55px;
+            border: 6px solid #e0e0e0;
+            border-top-color: #2eca6a; 
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .loader-subtext {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 5px;
+        }
+    </style>
+
+    <!-- On bloque le reste du contenu si en attente -->
+    {% else %}
+
+    <!-- Message de confirmation -->
+    <div class="alert alert-success text-center shadow-sm" role="alert">
+        <i class="bx bx-check-circle fs-1"></i>
+        <p class="fs-5 mb-0 mt-2">Votre paiement a été accepté avec succès.</p>
+    </div>
+
+    <!-- Produits -->
+    <div class="card recap-card mb-4 mx-auto">
+        <div class="card-body p-4">
+
+            <h4 class="mb-4"><i class="bx bx-cart"></i> Produits de la commande</h4>
+
+            <div class="table-responsive mx-5">
+                <table class="table recap-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th class="text-center">Quantité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ligne in lignes %}
+                        <tr>
+                            <td class="fw-semibold">
+                                <img src="
+                                    {% if ligne.produit.get_image_principale %}
+                                        {{ ligne.produit.get_image_principale }}
+                                    {% else %}
+                                        {% static 'img/default-product-image.jpg' %}
+                                    {% endif %}
+                                    "
+                                    class="img-fluid me-2"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                    alt="{{ ligne.produit.nom_produit }}">
+                                {{ ligne.produit.nom_produit }}
+                            </td>
+                            <td class="text-center">{{ ligne.quantite }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Total -->
+    <div class="card recap-card mb-5 mx-auto">
+        <div class="card-body p-4 text-end">
+            <h4><i class="bx bx-coin-stack"></i> Total</h4>
+            <p class="recap-total fw-bold">{{ total }} $</p>
+        </div>
+    </div>
+
+    <!-- Bouton retour accueil -->
+    <div class="text-center mb-5">
+        <a href="{% url 'index' %}" class="btn btn-success btn-lg">
+            <i class="bx bx-home-alt"></i> Retour à l'accueil
+        </a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<!-- Styles réutilisés du recap -->
+<style>
+    .recap-header {
+        background: linear-gradient(135deg, #2eca6a, #1f7f4c);
+        padding: 40px;
+        border-radius: 20px;
+        color: white;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .recap-card {
+        border: 0;
+        width: 60%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0px 6px 20px rgba(0,0,0,0.07);
+    }
+
+    .recap-table thead {
+        background: #f6f8fb;
+        font-weight: 600;
+    }
+
+    .recap-total {
+        font-size: 2rem;
+        color: #2eca6a;
+    }
+
+    .btn-pay {
+        background: #2eca6a;
+        border: none;
+        font-size: 1.2rem;
+        padding: 12px 30px;
+        border-radius: 50px;
+        transition: 0.3s;
+    }
+    .btn-pay:hover {
+        background: #29b05f;
+        transform: translateY(-2px);
+    }
+</style>
+
+{% endblock %}

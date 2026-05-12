@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Bienvenue chez Clic N Local !</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #ffffff;
+            max-width: 650px;
+            margin: 30px auto;
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #2eca6a 0%, #1fa855 100%);
+            border-radius: 8px 8px 0 0;
+            margin: -25px -30px 25px -30px;
+        }
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            color: #e6ffed;
+            margin: 10px 0 0 0;
+            font-size: 16px;
+        }
+        h2 {
+            color: #222222;
+            font-size: 22px;
+        }
+        .welcome-box {
+            background: #e6ffed;
+            color: #0f7a2f;
+            padding: 20px;
+            border-left: 4px solid #2eca6a;
+            border-radius: 5px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .welcome-box h3 {
+            margin: 0 0 10px 0;
+            color: #0f7a2f;
+            font-size: 20px;
+        }
+        .welcome-box p {
+            margin: 0;
+            font-size: 16px;
+        }
+        .info-section {
+            background: #f6f8fb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .info-section h4 {
+            color: #2eca6a;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .info-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555555;
+            display: inline-block;
+            width: 140px;
+        }
+        .info-value {
+            color: #222222;
+        }
+        .benefits {
+            background: #fff9e6;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .benefits h4 {
+            color: #ff9800;
+            margin-top: 0;
+        }
+        .benefits ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .benefits li {
+            padding: 5px 0;
+            color: #333333;
+        }
+        .cta-button {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .cta-button a {
+            background: #2eca6a;
+            color: #ffffff;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(46, 202, 106, 0.3);
+        }
+        .cta-button a:hover {
+            background: #1fa855;
+        }
+        .footer {
+            font-size: 12px;
+            text-align: center;
+            color: #777777;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .social-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #2eca6a;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header">
+            <h1>🎉 Bienvenue chez Clic N Local !</h1>
+            <p>Votre compte a été créé avec succès</p>
+        </div>
+
+        <h2>Bonjour {{ client.utilisateur.first_name }} {{ client.utilisateur.last_name }},</h2>
+
+        <div class="welcome-box">
+            <h3>✅ Merci de vous être inscrit !</h3>
+            <p>Nous sommes ravis de vous compter parmi notre communauté de passionnés de produits locaux.</p>
+        </div>
+
+        <p>
+            Votre inscription sur <strong>Clic N Local</strong> a été effectuée avec succès. 
+            Vous pouvez maintenant profiter de tous nos services et découvrir nos produits artisanaux et locaux.
+        </p>
+
+        <div class="info-section">
+            <h4>📋 Récapitulatif de votre compte</h4>
+            <div class="info-item">
+                <span class="info-label">Nom d'utilisateur :</span>
+                <span class="info-value">{{ client.utilisateur.username }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email :</span>
+                <span class="info-value">{{ client.utilisateur.email }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Téléphone :</span>
+                <span class="info-value">{{ client.num_telephone }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Adresse :</span>
+                <span class="info-value">{{ adresse.numero }} {{ adresse.rue }}, {{ adresse.ville }}, {{ adresse.province }} {{ adresse.code_postal }}</span>
+            </div>
+        </div>
+
+        <div class="benefits">
+            <h4>🎁 Vos avantages en tant que membre</h4>
+            <ul>
+                <li>✨ Accès exclusif à nos promotions et offres spéciales</li>
+                <li>🛒 Commande rapide et suivi en temps réel</li>
+                <li>📦 Livraison à domicile de produits frais et locaux</li>
+                <li>💚 Soutien direct aux producteurs de votre région</li>
+                <li>🔔 Notifications sur les nouveaux produits et événements</li>
+            </ul>
+        </div>
+
+        <div class="cta-button">
+            <a href="{{ site_url }}">Commencer mes achats</a>
+        </div>
+
+        <p style="text-align: center; color: #666666; margin-top: 20px;">
+            Vous avez des questions ? N'hésitez pas à <a href="{{ site_url }}/contact/" style="color: #2eca6a;">nous contacter</a>. 
+            Notre équipe est là pour vous aider !
+        </p>
+
+        <div class="social-links">
+            <p style="color: #666666;">Suivez-nous sur les réseaux sociaux</p>
+            <a href="#" title="Facebook">📘 Facebook</a>
+            <a href="#" title="Instagram">📷 Instagram</a>
+            <a href="#" title="Twitter">🐦 Twitter</a>
+        </div>
+
+        <div class="footer">
+            <p><strong>Clic N Local</strong></p>
+            <p>666 Rue du Sirop d'érable, Chicoutimi, QC, Canada</p>
+            <p>📧 contact@Clic_n_Local.com | 📞 (418) 555-0123</p>
+            <p style="margin-top: 15px;">
+                Cet email a été envoyé automatiquement suite à votre inscription.<br>
+                Merci de ne pas y répondre directement.
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>

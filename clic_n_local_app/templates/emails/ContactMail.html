@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Copie de votre message – Clic N Local</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #ffffff;
+            max-width: 650px;
+            margin: 30px auto;
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #2eca6a 0%, #1fa855 100%);
+            border-radius: 8px 8px 0 0;
+            margin: -25px -30px 25px -30px;
+        }
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 26px;
+        }
+        .header p {
+            color: #e6ffed;
+            margin-top: 8px;
+            font-size: 15px;
+        }
+        h2 {
+            color: #222222;
+            font-size: 22px;
+        }
+        .info-box {
+            background: #f6f8fb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .info-item {
+            padding: 6px 0;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555555;
+            display: inline-block;
+            width: 90px;
+        }
+        .message-box {
+            background: #e6ffed;
+            border-left: 4px solid #2eca6a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 25px 0;
+            color: #0f7a2f;
+            white-space: pre-line;
+        }
+        .footer {
+            font-size: 12px;
+            text-align: center;
+            color: #777777;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>📨 Message envoyé</h1>
+        <p>Copie de votre message – Clic N Local</p>
+    </div>
+
+    <h2>Bonjour {{ name }},</h2>
+
+    <p>
+        Merci de nous avoir contactés.  
+        Voici une copie du message que vous avez envoyé via notre site.
+    </p>
+
+    <div class="info-box">
+        <div class="info-item">
+            <span class="info-label">Objet :</span>
+            <span>{{ subject }}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Email :</span>
+            <span>{{ email }}</span>
+        </div>
+    </div>
+
+    <div class="message-box">
+        {{ message }}
+    </div>
+
+    <p style="text-align:center; color:#666;">
+        Notre équipe vous répondra dans les plus brefs délais.
+    </p>
+
+    <div class="footer">
+        <p><strong>Clic N Local</strong></p>
+        <p>666 Rue du Sirop d'érable, Chicoutimi, QC, Canada</p>
+        <p>📧 contact@clicnlocal.com | 📞 (418) 555-0123</p>
+        <p style="margin-top: 10px;">
+            Cet email est une confirmation automatique.<br>
+            Merci de ne pas y répondre directement.
+        </p>
+    </div>
+
+</div>
+</body>
+</html>

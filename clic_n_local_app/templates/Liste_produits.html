@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-4">
+              <h1 class="heading-title">Nos produits locaux</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'index' %}">Accueil</a></li>
+            <li class="current">Produits</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Properties Section -->
+    <section id="properties" class="properties section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row">
+          <!-- filter Section -->
+          <div class="col-lg-3" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="properties-sidebar">
+
+              <form method="GET" action="" class="filter-widget" id="filters">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="filter-title m-0">Filtrer vos recherches</h5>
+                  <a href="{% url 'produits_list' %}" class="btn btn-sm btn-outline-secondary">Défaut</a>
+                </div>
+
+                <div class="filter-section">
+                  <label class="form-label">Recherche par mots-clés</label>
+                  <input type="text" id="search" name="search" class="form-control" placeholder="Rechercher" {% if request.GET.search %} value="{{request.GET.search}}"{% endif %}>
+                </div>
+
+                <div class="filter-section">
+                  <label class="form-label">Catégories</label>
+                  <select id="category" name="category" class="form-select">
+                    <option value="">Toutes les catégories</option>
+                    {% for cat in categories %}
+                      <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %} selected {% endif %}>
+                        {{ cat.nom }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="filter-section">
+                  <label class="form-label">Plage de prix</label>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <input type="number" id="price_min" name="price_min" class="form-control" placeholder="Minimum" {% if request.GET.price_min %} value="{{request.GET.price_min}}"{% endif %}>
+                    </div>
+                    <div class="col-6">
+                      <input type="number" id="price_max" name="price_max" class="form-control" placeholder="Maximum" {% if request.GET.price_max %} value="{{request.GET.price_max}}"{% endif %}>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Promotions :</label>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="promo_all">
+                        <label class="form-check-label" for="promo_all">
+                            Tout sélectionner
+                        </label>
+                    </div>
+
+                    {% for promo in promotions %}
+                    <div class="form-check">
+                        <input class="form-check-input promo-checkbox"
+                              type="checkbox"
+                              name="promo"
+                              value="{{ promo.id }}"
+                              id="promo{{ promo.id }}"
+                              {% if promo.id in selected_promos %}checked{% endif %}>
+                        <label class="form-check-label" for="promo{{ promo.id }}">
+                            {{ promo.nom }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button class="btn btn-primary w-100" type="submit">Appliquer</button>
+              </form>
+            </div>
+          </div>
+          <!-- end filter Section -->
+
+          <div class="col-lg-9">
+
+            <div class="properties-header mb-4">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="sort-dropdown">
+                  <select id="sort" name="sort" class="form-select" form="filters" onchange="this.form.submit()">
+                    <option value="">Par défaut</option>
+                    <option value="nom_produit" {% if request.GET.sort == "nom_produit" %}selected{% endif %}>Nom (A-Z)</option>
+                    <option value="-nom_produit" {% if request.GET.sort == "-nom_produit" %}selected{% endif %}>Nom (Z-A)</option>
+                    <option value="prix" {% if request.GET.sort == "prix" %}selected{% endif %}>Prix croissant</option>
+                    <option value="-prix" {% if request.GET.sort == "-prix" %}selected{% endif %}>Prix décroissant</option>
+                    <!-- <option value="-release_date" {% if request.GET.sort == "-release_date" %}selected{% endif %}>Nouveaux</option>
+                    <option value="release_date" {% if request.GET.sort == "release_date" %}selected{% endif %}>Anciens</option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {% if request.GET.search or request.GET.category or request.GET.price_min or request.GET.price_max %}
+              <div class="alert alert-info mb-4">
+                {% if request.GET.search %}
+                  Résultats pour la recherche : 
+                  <strong>{{ request.GET.search }}</strong>
+                    <br>
+                {% endif %}
+                {% if page_obj.paginator.count == 1 %}
+                  <span class="text-muted">({{ page_obj.paginator.count }} résultat trouvé)</span>
+                {% elif page_obj.paginator.count == 0 %}
+                  <span class="text-muted">(Aucun résultat trouvé)</span>
+                {% else %}
+                  <span class="text-muted">({{ page_obj.paginator.count }} résultats trouvés)</span>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <div class="properties-grid view-grid active" data-aos="fade-up" data-aos-delay="200">
+              <div class="row g-4">
+
+                {% for produit in page_obj %}
+                <div class="col-lg-4 col-md-4">
+                  <div class="property-card">
+                    <div class="property-image">
+                      <img src="
+                        {% if produit.get_image_principale %}
+                            {{ produit.get_image_principale }}
+                        {% else %}
+                            {% static 'img/default-product-image.jpg' %}
+                        {% endif %}
+                    "
+                    class="img-fluid"
+                    alt="{{ produit.nom_produit }}">
+                    {% if produit.active_promo %}
+                        <div class="property-badges">
+                            <span class="badge for-sale">{{ produit.active_promo.promotion}}</span>
+                            {% if produit.active_promo.type == "POURCENTAGE" %}
+                                <span class="badge featured">{{ produit.active_promo.valeur_promo|floatformat:0 }} %</span>
+                            {% else %}
+                                <span class="badge featured">- {{ produit.active_promo.valeur_promo }} $</span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    </div>
+                    <div class="property-content">
+                      <h4 class="property-title">{{ produit.nom_produit }}</h4>
+                      {% if produit.active_promo %}
+                          <div class="featured-agents">
+                            <div class="agent-stats">
+                              <div class="stat-item">
+                                <span class="stat-number" style="text-decoration: line-through; color: #999;">{{ produit.prix }} $</span>
+                                <span class="stat-label">Prix original</span>
+                              </div>
+                              <div class="stat-divider"></div>
+                              <div class="stat-item">
+                                <span class="stat-number" style="color: #e74c3c; font-weight: bold;">{{ produit.get_discounted_price|floatformat:2 }} $</span>
+                                <span class="stat-label">Prix réduit</span>
+                              </div>
+                            </div>
+                          </div>
+                      {% else %}
+                        <div class="featured-agents">
+                            <div class="agent-stats">
+                              <div class="stat-item">
+                                <span class="property-price" >{{ produit.prix }} $</span>
+                              </div>
+                            </div>
+                          </div>
+                      {% endif %}
+                      <div class="d-flex align-items-center gap-2 mb-3">
+                        {% if produit.categorie.image %}
+                        <img src="{{ produit.categorie.image.url }}"
+                              alt="{{ produit.categorie }}"
+                              class="img-fluid rounded"
+                              style="width: 24px; height: 24px; object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'img/default-category.png' %}"
+                              alt="{{ produit.categorie }}"
+                              class="img-fluid rounded"
+                              style="width: 24px; height: 24px; object-fit: cover;">
+                        {% endif %}
+                          
+                        <p class="property-location mb-0">{{ produit.categorie }}</p>
+                      </div>
+                      <a href="{% url 'produit-detail' produit.id %}" class="btn btn-primary w-100">Voir plus</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <nav class="mt-5" data-aos="fade-up" data-aos-delay="300">
+              <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">«</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">«</span></li>
+                {% endif %} 
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                  <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">»</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">»</span></li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Properties Section -->
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkAll = document.getElementById("promo_all");
+        const checkboxes = document.querySelectorAll(".promo-checkbox");
+
+        // Si "Tout" est coché ou décoché
+        checkAll.addEventListener("change", function() {
+            checkboxes.forEach(cb => cb.checked = checkAll.checked);
+        });
+
+        // Si toutes les cases sont cochées/décochées individuellement, mettre à jour "Tout"
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", function() {
+                checkAll.checked = Array.from(checkboxes).every(c => c.checked);
+            });
+        });
+    });
+    </script>
+
+{% endblock %}

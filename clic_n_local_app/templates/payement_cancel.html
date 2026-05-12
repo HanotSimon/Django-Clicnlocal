@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="recap-header text-center mt-5" style="background: linear-gradient(135deg, #ff6b6b, #c0392b);">
+        <h1 class="fw-bold mb-1">Paiement annulé</h1>
+        <p class="mb-0">Votre transaction n’a pas été finalisée.</p>
+    </div>
+
+    <!-- Message -->
+    <div class="alert alert-danger text-center shadow-sm" role="alert">
+        <i class="bx bx-x-circle fs-1"></i>
+        <p class="fs-5 mb-0 mt-2">Vous avez annulé votre paiement. Aucun montant n’a été débité.</p>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-center mb-5">
+        <a href="{% url 'index' %}" class="btn btn-secondary btn-lg">
+            <i class="bx bx-home-alt"></i> Retour à l’accueil
+        </a>
+    </div>
+
+</div>
+
+<!-- Styles cohérents -->
+<style>
+    .recap-header {
+        padding: 40px;
+        border-radius: 20px;
+        color: white;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .btn-danger {
+        background: #e74c3c;
+        border-color: #e74c3c;
+    }
+    .btn-danger:hover {
+        background: #c0392b;
+        border-color: #c0392b;
+    }
+
+    .btn-secondary {
+        background: #7f8c8d;
+        border-color: #7f8c8d;
+    }
+    .btn-secondary:hover {
+        background: #707b7c;
+        border-color: #707b7c;
+    }
+</style>
+
+{% endblock %}

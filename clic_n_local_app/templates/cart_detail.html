@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mon panier - Clic_n_Local{% endblock %}
+
+{% block content %}
+<!-- Page Title -->
+<div class="page-title">
+  <div class="heading">
+    <div class="container">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="heading-title">Mon panier</h1>
+          <p class="mb-0">Voici le détail des produits que vous avez ajoutés.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="{% url 'index' %}">Accueil</a></li>
+        <li class="current">Panier</li>
+      </ol>
+    </div>
+  </nav>
+</div><!-- End Page Title -->
+
+<!-- Cart Details Section -->
+<section id="cart-details" class="property-details section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4">
+
+      <div class="col-lg-8">
+        <!-- Cart Items -->
+        <div class="property-gallery" data-aos="fade-up" data-aos-delay="200">
+          {% if items %}
+            <ul class="list-group">
+              {% for item in items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                  <!-- Image produit -->
+                  <div class="d-flex align-items-center gap-3">
+                    {% if item.produit.get_image_principale %}
+                    <a href="{% url 'produit-detail' item.produit.id %}">
+                      <img src="{{ item.produit.get_image_principale }}" alt="{{ item.produit.nom_produit }}" 
+                          class="img-thumbnail" style="width:80px; height:auto;">
+                    </a>
+                  {% endif %}
+
+                    <div>
+                      <strong>{{ item.produit.nom_produit }}</strong><br>
+
+                      <!-- Prix avec promo -->
+                      {% if item.prix_promo and item.prix_promo < item.prix %}
+                      <!-- Prix régulier barré -->
+                      <span style="text-decoration: line-through; color:#777;">
+                          {{ item.prix|floatformat:2 }} $
+                      </span>
+                      <!-- Prix promo en rouge -->
+                      <span style="color:#e60000; font-weight:bold;">
+                          {{ item.prix_promo|floatformat:2 }} $
+                      </span><br>
+                      <!-- Rabais en vert -->
+                      <small style="color:green;">
+                          Rabais : {{ item.rabais|floatformat:2 }} $
+                      </small>
+                      {% else %}
+                      <!-- Pas de promo : juste prix régulier -->
+                      <span style="font-weight:bold;">
+                          {{ item.prix|floatformat:2 }} $
+                      </span>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <!-- Quantité modifiable -->
+                  <form action="{% url 'update_cart_item' item.id %}" method="POST" class="d-flex align-items-center">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantite }}" min="0"
+                           class="form-control form-control-sm text-success fw-bold"
+                           style="width:70px;">
+                    <button type="submit" class="btn btn-outline-primary btn-sm ms-2">
+                      <i class="bi bi-arrow-repeat"></i>
+                    </button>
+                  </form>                  
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>Votre panier est vide.</p>
+          {% endif %}
+        </div><!-- End Cart Items -->
+      </div>
+
+      <div class="col-lg-4">
+        <!-- Cart Overview -->
+        <div class="property-overview sticky-top" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="price-tag">
+            <span class="regular-price" style="font-weight:bold; font-size:2rem;">
+              Total : {{ total|floatformat:2 }} $
+            </span>
+          </div>
+
+          <div class="property-amenities mt-4">
+            <h3>Actions</h3>
+            <div class="d-flex align-items-center gap-3 mt-3 flex-wrap">
+              <a href="{% url 'recap_commande' %}" class="btn btn-danger d-flex align-items-center">
+                <i class="bi bi-credit-card me-2"></i>
+                Passer la commande
+              </a>
+              <a href="{% url 'produits_list' %}" class="btn btn-secondary d-flex align-items-center">
+                <i class="bi bi-arrow-left me-2"></i>
+                Continuer vos achats
+              </a>
+            </div>
+          </div>
+
+        </div><!-- End Cart Overview -->
+      </div>
+
+    </div>
+  </div>
+</section><!-- /Cart Details Section -->
+{% endblock %}

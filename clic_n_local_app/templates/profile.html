@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mon Profil - Clic_n_Local{% endblock %}
+
+{% block content %}
+
+<!-- Page Title -->
+<div class="page-title">
+    <div class="heading">
+        <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="heading-title">Mon Profil</h1>
+                    <p class="mb-0">
+                        Gérez vos informations personnelles et votre adresse de livraison.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li><a href="{% url 'index' %}">Accueil</a></li>
+                <li class="current">Mon Profil</li>
+            </ol>
+        </div>
+    </nav>
+</div><!-- End Page Title -->
+
+<!-- Profile Section -->
+<section id="profile-section" class="contact-2 section">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        
+        <!-- Info Card -->
+        <div class="row justify-content-center mb-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-10">
+                <div class="alert alert-info" style="background: linear-gradient(135deg, #2eca6a 0%, #1fa855 100%); color: white; border: none; border-radius: 10px;">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle" style="font-size: 3rem; margin-right: 20px;"></i>
+                        <div>
+                            <h4 style="color: white; margin: 0;">Bienvenue, {{ user.first_name }} {{ user.last_name }} !</h4>
+                            <p style="margin: 5px 0 0 0; opacity: 0.9;">Nom d'utilisateur: <strong>{{ user.username }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+            <div class="col-lg-10">
+                <div class="contact-form-wrapper">
+                    <h2 class="text-center mb-4"><i class="bi bi-pencil-square"></i> Modifier mes informations</h2>
+                    
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            
+                            <!-- Informations personnelles -->
+                            <div class="col-12">
+                                <h5 class="mb-3"><i class="bi bi-person"></i> Informations personnelles</h5>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-person"></i>
+                                        {{ form.first_name }}
+                                    </div>
+                                    {% if form.first_name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.first_name.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-person"></i>
+                                        {{ form.last_name }}
+                                    </div>
+                                    {% if form.last_name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.last_name.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-envelope"></i>
+                                        {{ form.email }}
+                                    </div>
+                                    {% if form.email.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.email.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.num_telephone.id_for_label }}">{{ form.num_telephone.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-telephone"></i>
+                                        {{ form.num_telephone }}
+                                    </div>
+                                    {% if form.num_telephone.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.num_telephone.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <a href="{% url 'password_change' %}" class="btn btn-warning">
+                                <i class="bi bi-key"></i> Changer mon mot de passe
+                            </a>
+
+                            <!-- Adresse de livraison -->
+                            <div class="col-12 mt-4">
+                                <h5 class="mb-3"><i class="bi bi-geo-alt"></i> Adresse de livraison</h5>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="{{ form.numero.id_for_label }}">{{ form.numero.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-hash"></i>
+                                        {{ form.numero }}
+                                    </div>
+                                    {% if form.numero.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.numero.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label for="{{ form.rue.id_for_label }}">{{ form.rue.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-signpost"></i>
+                                        {{ form.rue }}
+                                    </div>
+                                    {% if form.rue.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.rue.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.ville.id_for_label }}">{{ form.ville.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-building"></i>
+                                        {{ form.ville }}
+                                    </div>
+                                    {% if form.ville.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.ville.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.province.id_for_label }}">{{ form.province.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-map"></i>
+                                        {{ form.province }}
+                                    </div>
+                                    {% if form.province.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.province.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.code_postal.id_for_label }}">{{ form.code_postal.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-mailbox"></i>
+                                        {{ form.code_postal }}
+                                    </div>
+                                    {% if form.code_postal.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.code_postal.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.pays.id_for_label }}">{{ form.pays.label }}</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-globe"></i>
+                                        {{ form.pays }}
+                                    </div>
+                                    {% if form.pays.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.pays.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.boite.id_for_label }}">{{ form.boite.label }} <small class="text-muted">(optionnel)</small></label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-box"></i>
+                                        {{ form.boite }}
+                                    </div>
+                                    {% if form.boite.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.boite.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Boutons d'action -->
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-submit" style="margin-right: 10px;">
+                                    <i class="bi bi-save"></i> Enregistrer les modifications
+                                </button>
+                                <a href="{% url 'index' %}" class="btn btn-secondary">
+                                    <i class="bi bi-x-circle"></i> Annuler
+                                </a>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section><!-- /Profile Section -->
+
+{% endblock %}

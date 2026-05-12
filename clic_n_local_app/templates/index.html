@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% block title %}Home - Clic n Local{% endblock %}
+{% block content %} 
+{% load static %}
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="hero-content">
+          <div class="row align-items-center">
+
+            <div class="col-lg-6 hero-text" data-aos="fade-right" data-aos-delay="200">
+              <div class="hero-badge">
+                <i class="bi bi-star-fill"></i>
+                <span>Produit Premium</span>
+              </div>
+                <h1>Produits locaux frais</h1>
+                <p>Découvrez des produits frais et artisanaux issus des producteurs de votre région : fruits et légumes de saison, fromages fermiers, pains artisanaux et articles faits main. En favorisant les circuits courts, vous soutenez l'économie locale, bénéficiez d'une qualité supérieure et réduisez l'empreinte écologique. Commandez en ligne, récupérez en magasin ou faites-vous livrer rapidement.</p>              
+
+              <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <h3><span data-purecounter-start="0" data-purecounter-end="2847" data-purecounter-duration="1" class="purecounter"></span>+</h3>
+                      <p>Produits</p>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <h3><span data-purecounter-start="0" data-purecounter-end="156" data-purecounter-duration="1" class="purecounter"></span>+</h3>
+                      <p>Partenaires</p>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <h3><span data-purecounter-start="0" data-purecounter-end="98" data-purecounter-duration="1" class="purecounter"></span>%</h3>
+                      <p>Client Satisfaction</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- End Hero Text -->
+
+            <div class="col-lg-6 hero-images" data-aos="fade-left" data-aos-delay="400">
+              <div class="image-stack">
+                <div class="main-image">
+                  <img src="{% static 'img/homepage-garden.png' %}" alt="Garden Image" class="img-fluid">
+                </div>
+
+                <div class="secondary-image">
+                  <img src="{% static 'img/homepage-garden-2.png' %}" alt="Garden Image" class="img-fluid">
+                </div>
+                <div class="floating-card">
+                  <div class="agent-info">
+                    <img src="{% static 'img/homepage-garden-3.png' %}" alt="Garden Image" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Hero Images -->
+
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- Featured Properties Section -->
+    <section id="featured-properties" class="featured-properties section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nos Catégories</h2>
+        <p>Voici nos différentes catégories de produits disponibles.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="testimonials-slider swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "slidesPerView": 1,
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "navigation": {
+                "nextEl": ".swiper-button-next",
+                "prevEl": ".swiper-button-prev"
+              },
+              "pagination": {
+                "el": ".swiper-pagination",
+                "clickable": true
+              }
+            }
+          </script>
+
+          <div class="swiper-wrapper">
+            {% for group in categories_grouped %}
+              <div class="swiper-slide">
+                <div class="row gy-4">
+                  {% for cat in group %}
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                      <article class="stack-card">
+                        <figure class="stack-media">
+                          {% if cat.image %}
+                            <img src="../media/{{ cat.image }}" alt="{{ cat.nom }}" class="img-fluid" loading="lazy">
+                          {% else %}
+                            <img src="{% static 'img/default-category.png' %}" alt="{{ cat.nom }}" class="img-fluid" loading="lazy">
+                          {% endif %}
+                          <figcaption>
+                            <span class="chip exclusive">Catégorie</span>
+                          </figcaption>
+                        </figure>
+                        <div class="stack-body">
+                          <h5 style="text-align: center;"><a href="{% url 'produits_list' %}?category={{ cat.id }}">{{ cat.nom }}</a></h5>
+                          <div class="stack-foot" style="display: flex; justify-content: center; align-items: center;">
+                            <a href="{% url 'produits_list' %}?category={{ cat.id }}" class="stack-link">Voir les produits</a>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+
+    </section><!-- /Featured Properties Section -->
+
+    <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Produit récemment ajoutés</h2>
+        <p>Découvrez les derniers produits ajoutés à notre boutique.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-4 justify-content-center">
+          {% for produit in produits_recents %}
+            <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0|add:'200' }}">
+              <div class="service-card product-card">
+                <div class="service-header">
+                  <div class="service-icon">
+                    <i class="bi bi-bag"></i>
+                  </div>
+                  <div class="service-number">{{ forloop.counter|stringformat:"02d" }}</div>
+                </div>
+
+                <div class="product-media" style="height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; position: relative;">
+                  {% if produit.images.all %}
+                    <img src="{{ produit.images.first.image.url }}" alt="{{ produit.nom_produit }}" class="img-fluid" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                  {% else %}
+                    <img src="{% static 'img/default-product-image.jpg' %}" alt="{{ produit.nom_produit }}" class="img-fluid" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                  {% endif %}
+                  
+                  {% if produit.a_promotion %}
+                    {% for promo in produit.promotions_actives %}
+                      {% if promo.type == 'POURCENTAGE' %}
+                        <div style="position: absolute; top: 16px; right: 16px; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; background: linear-gradient(135deg, #ffd700, #ffb000); color: #333;">-{{ promo.valeur_promo|floatformat:0 }}%</div>
+                      {% else %}
+                        <div style="position: absolute; top: 16px; right: 16px; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; background: linear-gradient(135deg, #ffd700, #ffb000); color: #333;">-{{ promo.valeur_promo }} $</div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+                <div class="service-content">
+                  <h3><a href="{% url 'produit-detail' produit.id %}">{{ produit.nom_produit }}</a></h3>
+                  <p>{{ produit.description|default:"Description non disponible."|truncatechars:100 }}</p>
+                  
+                  {% if produit.a_promotion %}
+                    <div class="product-meta" style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 8px;">
+                        <span style="text-decoration: line-through; color: #999; font-size: 14px;">{{ produit.prix }} $ / {{ produit.unite_de_vente.nom }}</span>
+                        <span style="color: #e74c3c; font-weight: bold; font-size: 18px; margin-left: 8px;">{{ produit.prix_reduit|floatformat:2 }} $ / {{ produit.unite_de_vente.nom }}</span>
+                      </div>
+                    </div>
+                    <div class="location-tag">
+                      <i class="bi bi-tag"></i>
+                      <span>{{ produit.categorie.nom }}</span>
+                    </div>
+                  {% else %}
+                    <div class="product-meta" style="margin-bottom: 15px;">
+                      <span class="price">{{ produit.prix }} $ / {{ produit.unite_de_vente.nom }}</span>
+                    </div>
+                    <div class="location-tag">
+                      <i class="bi bi-tag"></i>
+                      <span>{{ produit.categorie.nom }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="service-action">
+                  <a href="{% url 'produit-detail' produit.id %}" class="service-btn">
+                    <span>Voir le produit</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+
+        <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+          <a href="{% url 'produits_list' %}" class="btn-all-services">
+            <span>Decouvrir tous nos produits</span>
+            <i class="bi bi-arrow-up-right"></i>
+          </a>
+        </div>
+
+      </div>
+
+    </section><!-- /Featured Services Section -->
+
+    <!-- Featured Agents Section -->
+    <section id="featured-agents" class="featured-agents section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Produits en promotion</h2>
+        <p>Découvrez nos produits actuellement en promotion.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="promo-slider swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "slidesPerView": 1,
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "navigation": {
+                "nextEl": ".swiper-button-next",
+                "prevEl": ".swiper-button-prev"
+              },
+              "pagination": {
+                "el": ".swiper-pagination",
+                "clickable": true
+              }
+            }
+          </script>
+
+          <div class="swiper-wrapper">
+            {% for group in promotion_grouped %}
+              <div class="swiper-slide">
+                <div class="row gy-5 justify-content-center">
+                  {% for produit in group %}
+                  <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
+                    <div class="agent-card product-promo-card">
+                      <div class="agent-image" style="height: 250px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
+                        {% if produit.images.all %}
+                          <img src="{{ produit.images.first.image.url }}" alt="{{ produit.nom_produit }}" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                          <img src="{% static 'img/default-product-image.jpg' %}" alt="{{ produit.nom_produit }}" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% endif %}
+                        <div class="agent-overlay">
+                        </div>
+                        {% for promo in produit.promotions_actives %}
+                          {% if promo.type == 'POURCENTAGE' %}
+                            <div class="status-badge top-agent">-{{ promo.valeur_promo|floatformat:0 }}%</div>
+                          {% else %}
+                            <div class="status-badge top-agent">-{{ promo.valeur_promo }} $</div>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      <div class="agent-info">
+                        <div class="agent-meta">
+                          <h3 class="agent-name">{{ produit.nom_produit }}</h3>
+                          <p class="agent-title">{{ produit.description|default:"Description non disponible."|truncatechars:100 }}</p>
+                        </div>
+                        <div class="agent-stats">
+                          <div class="stat-item">
+                            <span class="stat-number" style="text-decoration: line-through; color: #999;">{{ produit.prix }} $</span>
+                            <span class="stat-label">Prix original</span>
+                          </div>
+                          <div class="stat-divider"></div>
+                          <div class="stat-item">
+                            <span class="stat-number" style="color: #e74c3c; font-weight: bold;">{{ produit.prix_reduit|floatformat:2 }} $</span>
+                            <span class="stat-label">Prix réduit</span>
+                          </div>
+                        </div>
+                        <div class="location-tag">
+                          <i class="bi bi-tag"></i>
+                          <span>{{ produit.categorie.nom }}</span>
+                        </div>
+                        <a href="{% url 'produit-detail' produit.id %}" class="profile-link">Voir le produit</a>
+                      </div>
+                    </div>
+                  </div><!-- End Agent Card -->
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+        <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
+          <a href="{% url 'produits_list' %}?promo=all" class="explore-agents-btn">
+            <span>Decouvrir produit en promotion</span>
+            <i class="bi bi-arrow-right-circle"></i>
+          </a>
+        </div>
+
+      </div>
+
+    </section><!-- /Featured Agents Section -->
+    {% endblock %}

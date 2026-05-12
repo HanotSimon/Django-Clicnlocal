@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}À propos - Clic_n_Local{% endblock %}
+
+{% block content %}
+<!-- Page Title -->
+<div class="page-title">
+  <div class="heading">
+    <div class="container">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="heading-title">À propos</h1>
+          <p class="mb-0">
+            Clic_n_Local est une plateforme qui met en relation les consommateurs et les producteurs locaux.
+            Notre objectif est de rendre l'achat de produits frais et artisanaux simple, rapide et accessible, tout en soutenant l'économie de proximité.
+          </p>              
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="{% url 'index' %}">Accueil</a></li>
+        <li class="current">À propos</li>
+      </ol>
+    </div>
+  </nav>
+</div><!-- End Page Title -->
+
+<!-- About Section -->
+<section id="about" class="about section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row align-items-center mb-5">
+      <div class="col-lg-7">
+        <div class="intro-content" data-aos="fade-right" data-aos-delay="200">
+          <h2>Vente de produits locaux, depuis 1985</h2>
+          <p class="lead-text">
+            Depuis 1985, Clic_n_Local connecte les consommateurs aux producteurs de leur région. 
+            Notre objectif est simple : rendre l'accès aux produits frais, artisanaux et de qualité 
+            plus facile, tout en soutenant les petites exploitations locales.
+          </p>
+          <p>
+            Grâce à un réseau de partenaires passionnés, nous proposons une sélection variée 
+            de produits issus d'un savoir-faire authentique. Chaque achat contribue à valoriser 
+            le travail des agriculteurs, artisans et producteurs qui font vivre nos terroirs.
+          </p>
+          <div class="founder-highlight" data-aos="fade-up" data-aos-delay="300">
+            <div class="founder-image">
+              <img src="{% static 'img/person/person-m-7.webp' %}" alt="Founder" class="img-fluid">
+            </div>
+            <div class="founder-info">
+              <blockquote>
+                "L'achat local n'est pas seulement une question de consommation, c'est un engagement 
+                envers nos producteurs et nos traditions."
+              </blockquote>
+              <div class="founder-details">
+                <h5>Simon Hanot</h5>
+                <span>Fondateur &amp; PDG</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="visual-section" data-aos="fade-left" data-aos-delay="250">
+          <div class="main-image">
+            <img src="{% static 'img/old-man.jpg' %}" alt="Old man" class="img-fluid">
+            <div class="experience-badge">
+              <div class="badge-number">40+</div>
+              <div class="badge-text">Années d'expérience</div>
+            </div>
+          </div>
+          <div class="overlay-image">
+            <img src="{% static 'img/water.jpg' %}" alt="Water" class="img-fluid"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="achievements-grid" data-aos="fade-up" data-aos-delay="350">
+      <div class="row text-center">
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="achievement-item" data-aos="zoom-in" data-aos-delay="400">
+            <div class="achievement-icon">
+              <i class="bi bi-cart-check"></i>
+            </div>
+            <div class="achievement-number">
+              <span data-purecounter-start="0" data-purecounter-end="10000" data-purecounter-duration="2" class="purecounter"></span>+
+            </div>
+            <div class="achievement-label">Produits vendus</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="achievement-item" data-aos="zoom-in" data-aos-delay="450">
+            <div class="achievement-icon">
+              <i class="bi bi-emoji-smile"></i>
+            </div>
+            <div class="achievement-number">
+              <span data-purecounter-start="0" data-purecounter-end="98" data-purecounter-duration="2" class="purecounter"></span>%
+            </div>
+            <div class="achievement-label">Satifaction client</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="achievement-item" data-aos="zoom-in" data-aos-delay="500">
+            <div class="achievement-icon">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+            <div class="achievement-number">
+              <span data-purecounter-start="0" data-purecounter-end="35" data-purecounter-duration="2" class="purecounter"></span>
+            </div>
+            <div class="achievement-label">Villes</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="achievement-item" data-aos="zoom-in" data-aos-delay="550">
+            <div class="achievement-icon">
+              <i class="bi bi-award"></i>
+            </div>
+            <div class="achievement-number">
+              <span data-purecounter-start="0" data-purecounter-end="127" data-purecounter-duration="2" class="purecounter"></span>
+            </div>
+            <div class="achievement-label">Récompenses</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Achievements Grid -->
+
+    <div class="timeline-section" data-aos="fade-up" data-aos-delay="400">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="section-header text-center mb-5">
+            <h3>Notre Parcours</h3>
+            <p>Depuis plus de 40 ans, nous mettons en valeur les meilleurs produits locaux pour nos clients.</p>
+          </div>
+    
+          <div class="timeline">
+            <div class="timeline-item" data-aos="fade-right" data-aos-delay="450">
+              <div class="timeline-year">1985</div>
+              <div class="timeline-content">
+                <h4>Création de Clic_n_Local</h4>
+                <p>Notre aventure commence avec la volonté de rapprocher les producteurs locaux des consommateurs passionnés de produits authentiques.</p>
+              </div>
+            </div>
+            <div class="timeline-item" data-aos="fade-left" data-aos-delay="500">
+              <div class="timeline-year">1995</div>
+              <div class="timeline-content">
+                <h4>Premier Marché en Ligne</h4>
+                <p>Nous lançons notre première plateforme en ligne, permettant à nos clients de commander facilement des produits frais et locaux depuis chez eux.</p>
+              </div>
+            </div>
+            <div class="timeline-item" data-aos="fade-right" data-aos-delay="550">
+              <div class="timeline-year">2015</div>
+              <div class="timeline-content">
+                <h4>Extension Nationale</h4>
+                <p>Nous étendons notre réseau à l'échelle nationale, collaborant avec plus de 500 producteurs locaux pour offrir une gamme encore plus variée.</p>
+              </div>
+            </div>
+            <div class="timeline-item" data-aos="fade-left" data-aos-delay="600">
+              <div class="timeline-year">2024</div>
+              <div class="timeline-content">
+                <h4>Innovation et Durabilité</h4>
+                <p>Lancement de notre programme zéro déchet et amélioration de l'expérience client grâce à de nouvelles fonctionnalités sur notre site.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Timeline Section -->        
+
+    <div class="team-preview" data-aos="fade-up" data-aos-delay="450">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h3>Notre Équipe d'experts</h3>
+          <p class="team-description">Une équipe passionnée par les produits locaux et engagée à vous offrir la meilleure sélection de producteurs régionaux, avec authenticité et savoir-faire.</p>
+          <div class="team-grid">
+            <div class="row justify-content-center">
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="team-member" data-aos="flip-up" data-aos-delay="500">
+                  <div class="member-image">
+                    <img src="{% static 'img/real-estate/agent-5.webp' %}" alt="Team Member" class="img-fluid">
+                  </div>
+                  <div class="member-info">
+                    <h5>Diana Potupis</h5>
+                    <span>Conseillère experte en produits locaux</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="team-member" data-aos="flip-up" data-aos-delay="550">
+                  <div class="member-image">
+                    <img src="{% static 'img/real-estate/agent-2.webp' %}" alt="Team Member" class="img-fluid">
+                  </div>
+                  <div class="member-info">
+                    <h5>Maxime Wouters</h5>
+                    <span>Responsable des ventes locales</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Team Preview -->
+
+  </div>
+
+</section><!-- /About Section -->
+{% endblock %}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Confirmation de votre commande</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    background: #ffffff;
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.header {
+    background: linear-gradient(135deg, #2eca6a, #1fa855);
+    padding: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    margin: -25px -30px 25px -30px;
+}
+.header h1 {
+    margin: 0;
+    font-size: 26px;
+}
+.success {
+    background: #e6ffed;
+    color: #0f7a2f;
+    padding: 15px;
+    border-left: 4px solid #2eca6a;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+.section {
+    margin: 25px 0;
+}
+.section h3 {
+    margin-bottom: 10px;
+    color: #2eca6a;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th {
+    background: #f6f8fb;
+    text-align: left;
+    padding: 10px;
+}
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.text-right {
+    text-align: right;
+}
+.total {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2eca6a;
+}
+.footer {
+    font-size: 12px;
+    text-align: center;
+    color: #777;
+    margin-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="header">
+    <h1>✔ Commande confirmée</h1>
+    <p>Merci pour votre achat chez {{ site_name }}</p>
+</div>
+
+<p>Bonjour <strong>{{ client.utilisateur.first_name }}</strong>,</p>
+
+<div class="success">
+    Votre paiement a été accepté avec succès.<br>
+    Votre commande <strong>#{{ commande.id }}</strong> est maintenant confirmée.
+</div>
+
+<!-- INFOS CLIENT -->
+<div class="section">
+<h3>👤 Informations client</h3>
+<p>
+<strong>Nom :</strong> {{ client.utilisateur.get_full_name }}<br>
+<strong>Email :</strong> {{ client.utilisateur.email }}
+</p>
+</div>
+
+<!-- ADRESSE -->
+<div class="section">
+<h3>📦 Adresse de livraison</h3>
+<p>
+{{ adresse.numero }} {{ adresse.rue }}<br>
+{{ adresse.ville }}, {{ adresse.province }}<br>
+{{ adresse.code_postal }}
+</p>
+</div>
+
+<!-- PRODUITS -->
+<div class="section">
+<h3>🛒 Détail de la commande</h3>
+<table class="table">
+<thead>
+<tr>
+    <th>Produit</th>
+    <th class="text-right">Prix</th>
+    <th class="text-right">Qté</th>
+    <th class="text-right">Sous-total</th>
+</tr>
+</thead>
+<tbody>
+{% for ligne in lignes %}
+<tr>
+    <td>{{ ligne.produit.nom_produit }}</td>
+    <td class="text-right">{{ ligne.prix }} $</td>
+    <td class="text-right">{{ ligne.quantite }}</td>
+    <td class="text-right">{{ ligne.sous_total|floatformat:2 }} $</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<!-- TOTAUX -->
+<div class="section">
+<table class="table">
+<tr>
+    <td>Sous-total</td>
+    <td class="text-right">{{ subtotal }} $</td>
+</tr>
+<tr>
+    <td>Taxes</td>
+    <td class="text-right">{{ taxes }} $</td>
+</tr>
+<tr>
+    <td class="total">Total payé</td>
+    <td class="text-right total">{{ total }} $</td>
+</tr>
+</table>
+</div>
+
+<!-- PAIEMENT -->
+<div class="section">
+<h3>💳 Informations de paiement</h3>
+<p>
+<strong>Méthode :</strong> {{ payment_method }}<br>
+<strong>Transaction :</strong> {{ payment_id }}
+</p>
+</div>
+
+<p>
+Vous recevrez un email lorsque votre commande sera expédiée.
+</p>
+
+<p>Cordialement,<br>
+<strong>L'équipe {{ site_name }}</strong></p>
+
+<div class="footer">
+Cet email est envoyé automatiquement suite à votre paiement.<br>
+Merci de ne pas y répondre directement.
+</div>
+
+</div>
+</body>
+</html>
